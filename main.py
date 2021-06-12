@@ -107,4 +107,5 @@ while True:
 		print("Input a number given in the options")
 		menu()
 	if answer == 99:
+		print("Thanks for using this program")
 		quit()		
