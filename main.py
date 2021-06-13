@@ -61,7 +61,7 @@ def if_four():
 	#reads the txt
 	ContactList=fo.read()
 	#prints everything that is written in the txt file
-	print(ContactList)
+	print(ContactList.sort())
 	print('\n')
 
 
