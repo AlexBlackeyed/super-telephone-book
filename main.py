@@ -7,7 +7,7 @@ from subprocess import call
 
 
 def main():
-	# open file in write mode
+	# opens file in write mode
 	fo = open("names.txt","a")
 	# Input the user data
 	data = input("Whats ur name and telephone?: ")
@@ -18,11 +18,13 @@ def main():
 	fo.close()
 
 def find_contact():
+	# opens file in read mode
 	fh = open("names.txt", "r")
+	# requests input from the user
 	word = input("Input the contact you wish to find!\n >")
 	s = " "
 	count = 1
-	
+	# reads the txt file and tries to match the input with it
 	while(s):
 		s = fh.readline()
 		L = s.split()
@@ -38,27 +40,27 @@ def find_contact():
 
 
 def delete_contact():
-				# open file in read mode
-					with open("names.txt", "r") as f:
+	# open file in read mode
+	with open("names.txt", "r") as f:
 						
 						# read data line by line 
 						dataa = f.readlines()
-						
 					# open file in write mode
-					with open("names.txt", "w") as f:
-						
-						for line in dataa :
-							
-							# condition for data to be deleted
-							if line.strip("\n") != delete_input : 
-								f.write(line)
+	with open("names.txt", "w") as f:
+		for line in dataa :							
+		# condition for data to be deleted
+			if line.strip("\n") != delete_input : 
+								f.write(line)				
 					
+				
 
 
 def if_four():
-	
+	# opens txt file in read mode
 	fo = open("names.txt", 'r')
+	#reads the txt
 	ContactList=fo.read()
+	#prints everything that is written in the txt file
 	print(ContactList)
 	print('\n')
 
@@ -67,7 +69,7 @@ def if_four():
 
 print("                              SUPER TELEPHONE BOOK")
 time.sleep(2)
-
+#just a cool looking ascii 
 print('''   
                             ░██████╗████████╗██████╗░
                             ██╔════╝╚══██╔══╝██╔══██╗
