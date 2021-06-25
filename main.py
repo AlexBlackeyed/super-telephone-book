@@ -34,7 +34,7 @@ def main():
 	# opens file in write mode
 	fo = open("names.txt","a")
 	# Input the user data
-	data = input("Whats ur name and telephone?: ")
+	data = input("Whats your name and telephone?: ")
 	# write data to the file
 	fo.write(os.linesep)
 	fo.write(data)
@@ -129,6 +129,6 @@ while True:
 	if answer == 99:
 		clear()
 		logo()
-		print("Thanks for using this program")
+		print("Thanks for using this program.")
 		time.sleep(2)
 		quit()		
