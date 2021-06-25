@@ -1,9 +1,33 @@
 import os
+from os import name, system
 import time
 import colorama
 from colorama import Fore
 from colorama import Style
-from subprocess import call
+
+
+print("                              SUPER TELEPHONE BOOK")
+time.sleep(2)
+#just a cool looking ascii 
+def logo():
+	print('''   
+                            ░██████╗████████╗██████╗░
+                            ██╔════╝╚══██╔══╝██╔══██╗
+                            ╚█████╗░░░░██║░░░██████╦╝
+                            ░╚═══██╗░░░██║░░░██╔══██╗
+                            ██████╔╝░░░██║░░░██████╦╝
+                            ╚═════╝░░░░╚═╝░░░╚═════╝░                            
+ ''')
+logo()
+time.sleep(2)
+print("Welcome To The Super Telephone Book\n What do you want to do next?")
+
+
+def clear():
+  
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
 
 
 def main():
@@ -41,14 +65,13 @@ def find_contact():
 
 def delete_contact():
 	# open file in read mode
-	with open("names.txt", "r") as f:
-						
-						# read data line by line 
-						dataa = f.readlines()
-					# open file in write mode
-	with open("names.txt", "w") as f:
+	with open("super-telephone-book\\names.txt", "r") as f:						
+		# read data line by line 
+		dataa = f.readlines()
+	# open file in write mode
+	with open("super-telephone-book\\names.txt", "w") as f:
 		for line in dataa :							
-		# condition for data to be deleted
+			# condition for data to be deleted
 			if line.strip("\n") != delete_input : 
 								f.write(line)				
 					
@@ -57,30 +80,15 @@ def delete_contact():
 
 def if_four():
 	# opens txt file in read mode
-	fo = open("names.txt", 'r')
+	fo = open("super-telephone-book\\names.txt", 'r')
 	#reads the txt
 	ContactList=fo.read()
 	#prints everything that is written in the txt file
-	print(ContactList.sort())
+	print(ContactList)
 	print('\n')
 
 
 
-
-print("                              SUPER TELEPHONE BOOK")
-time.sleep(2)
-#just a cool looking ascii 
-print('''   
-                            ░██████╗████████╗██████╗░
-                            ██╔════╝╚══██╔══╝██╔══██╗
-                            ╚█████╗░░░░██║░░░██████╦╝
-                            ░╚═══██╗░░░██║░░░██╔══██╗
-                            ██████╔╝░░░██║░░░██████╦╝
-                            ╚═════╝░░░░╚═╝░░░╚═════╝░                            
- ''')
-
-time.sleep(2)
-print("Welcome To The Super Telephone Book\n What do you want to do next?")
 
 
 
@@ -96,18 +104,31 @@ menu()
 while True:
 	answer = int(input("Enter your option:"))
 	if answer == 1:
+		clear()
+		logo()
 		main()			
 	elif answer == 2:
-			find_contact()
+		clear()
+		logo()
+		find_contact()
 	elif answer == 3:
+			clear()
+			logo()
 			if_four()
 			delete_input = input("Input the contact from the ones above that you want to be deleted!\n Note. Copy and paste exactly the contact otherwise it wont work :D\n >")
-			delete_contact()	
+			delete_contact()
+			menu()	
 	elif answer == 4:			
-			if_four()	
+			if_four()
+			menu()	
 	else:
+		clear()
+		logo()
 		print("Input a number given in the options")
 		menu()
 	if answer == 99:
+		clear()
+		logo()
 		print("Thanks for using this program")
+		time.sleep(2)
 		quit()		
