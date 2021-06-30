@@ -31,15 +31,12 @@ def clear():
 
 
 def main():
-	# opens file in write mode
-	fo = open("names.txt","a")
-	# Input the user data
-	data = input("Whats ur name and telephone?: ")
-	# write data to the file
-	fo.write(os.linesep)
-	fo.write(data)
-	# close the file
-	fo.close()
+	with open("names.txt","a") as fo:
+		# Input the user data
+		data = input("Whats your name and telephone?: ")
+		# write data to the file
+		fo.write(os.linesep)
+		fo.write(data)
 
 def find_contact():
 	# opens file in read mode
@@ -82,9 +79,9 @@ def if_four():
 	# opens txt file in read mode
 	fo = open("super-telephone-book\\names.txt", 'r')
 	#reads the txt
-	ContactList=fo.read()
+	contact_list=fo.read()
 	#prints everything that is written in the txt file
-	print(ContactList)
+	print(contact_list)
 	print('\n')
 
 
@@ -124,11 +121,11 @@ while True:
 	else:
 		clear()
 		logo()
-		print("Input a number given in the options")
+		print("Input a number given in the options:")
 		menu()
 	if answer == 99:
 		clear()
 		logo()
-		print("Thanks for using this program")
+		print("Thanks for using this program.")
 		time.sleep(2)
 		quit()		
