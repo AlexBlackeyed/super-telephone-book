@@ -43,19 +43,19 @@ def clear():
 
 def option_one():	
 	while True:
-		first_name = input("Whats your First Name? : ")
+		first_name = input("What's your First Name? : ")
 		if first_name.isalpha():
 			break
 		else:
 			continue 
 	while True:
-		surname = input("Whats your Surname? : ")
+		surname = input("What's your Surname? : ")
 		if surname.isalpha():
 			break
 		else:
 			continue
 	while True:
-		telephone_number = input("Whats your Telephone Number? : ")
+		telephone_number = input("What's your Telephone Number? : ")
 		if telephone_number.isalpha():
 			continue
 		else:
@@ -66,7 +66,7 @@ def option_one():
 			continue
 		else:
 			break
-	adress = input("Whats your Adress? : ")
+	adress = input("What's your Adress? : ")
 	while True:
 		zip_code = input("What's your Zip Code? : ")
 		if zip_code.isalpha():
@@ -90,13 +90,13 @@ def option_one():
 			continue
 	
 	while True:
-		birthday = input("When is your Birthday? : ")
+		birthday = input("When were you born? : ")
 		try:
 			dt_start = datetime.strptime(birthday, '%d/%m/%Y')
 			dt_start
 			break
 		except ValueError:
-			print("Incorrect format. You should write it like this(dd/mm/yyyy)")
+			print("Incorrect format. You should write it like this: dd/mm/yyyy")
 			continue
 	first_name.capitalize()
 	surname.capitalize()
