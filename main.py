@@ -1,26 +1,37 @@
-import os
 from os import name, system
 import time
 import colorama
 from colorama import Fore
 from colorama import Style
+import shutil
+import requests
+from datetime import datetime
 
 
-print("                              SUPER TELEPHONE BOOK")
-time.sleep(2)
+def centered(s):
+    print(s.center(shutil.get_terminal_size().columns))
+
+
 #just a cool looking ascii 
 def logo():
-	print('''   
-                            ░██████╗████████╗██████╗░
-                            ██╔════╝╚══██╔══╝██╔══██╗
-                            ╚█████╗░░░░██║░░░██████╦╝
-                            ░╚═══██╗░░░██║░░░██╔══██╗
-                            ██████╔╝░░░██║░░░██████╦╝
-                            ╚═════╝░░░░╚═╝░░░╚═════╝░                            
- ''')
-logo()
-time.sleep(2)
-print("Welcome To The Super Telephone Book\n What do you want to do next?")
+	centered("SUPER TELEPHONE BOOK")
+	centered('''
+	░██████╗████████╗██████╗░
+	██╔════╝╚══██╔══╝██╔══██╗
+	╚█████╗░░░░██║░░░██████╦╝
+	░╚═══██╗░░░██║░░░██╔══██╗
+	██████╔╝░░░██║░░░██████╦╝
+	╚═════╝░░░░╚═╝░░░╚═════╝
+	''')
+
+
+	
+def welcome_text():
+	time.sleep(2)
+	print("Welcome To The Super Telephone Book\n What do you want to do next?")
+
+
+
 
 
 def clear():
@@ -30,13 +41,84 @@ def clear():
         _ = system('cls')
 
 
-def main():
-	with open("names.txt","a") as fo:
-		# Input the user data
-		data = input("Whats your name and telephone?: ")
-		# write data to the file
-		fo.write(os.linesep)
-		fo.write(data)
+def option_one():	
+	while True:
+		first_name = input("Whats your First Name? : ")
+		if first_name.isalpha():
+			break
+		else:
+			continue 
+	while True:
+		surname = input("Whats your Surname? : ")
+		if surname.isalpha():
+			break
+		else:
+			continue
+	while True:
+		telephone_number = input("Whats your Telephone Number? : ")
+		if telephone_number.isalpha():
+			continue
+		else:
+			break
+	while True:
+		location = input("In which City do you live in? : ")
+		if  location.isdigit():
+			continue
+		else:
+			break
+	adress = input("Whats your Adress? : ")
+	while True:
+		zip_code = input("What's your Zip Code? : ")
+		if zip_code.isalpha():
+			continue
+		else:
+			break		
+	while True:
+		email_address = input("Input your email adress : ")
+		response = requests.get(
+			"https://isitarealemail.com/api/email/validate",
+			params = {'email': email_address})
+
+		status = response.json()['status']
+		if status == "valid":
+			break
+		elif status == "invalid":
+			print("email is invalid")
+			continue
+		else:
+			print("email was unknown")
+			continue
+	
+	while True:
+		birthday = input("When is your Birthday? : ")
+		try:
+			dt_start = datetime.strptime(birthday, '%d/%m/%Y')
+			dt_start
+			break
+		except ValueError:
+			print("Incorrect format. You should write it like this(dd/mm/yyyy)")
+			continue
+	first_name.capitalize()
+	surname.capitalize()
+	location.capitalize()
+	adress.capitalize()
+	txt_name = first_name + "_" + surname
+	data = first_name, surname, telephone_number, location, adress, zip_code, email_address, birthday
+	data = list(data)
+	basic_info = first_name + " " + surname
+	with open(''+txt_name+'.txt', "w+") as sh:
+		for i in data:
+			sh.write(i)
+			sh.write("\n")
+	with open("names.txt", "w+") as main_catalog:
+		main_catalog.write("\n")
+		main_catalog.write('\n')
+		main_catalog.write(basic_info)
+		main_catalog.write("\n")
+		main_catalog.write(telephone_number)
+		
+
+		
 
 def find_contact():
 	# opens file in read mode
@@ -53,12 +135,7 @@ def find_contact():
 			print("Line Number:", count, ":", s)
 		
 		count += 1
-		
-	
-
-
-
-
+			
 
 def delete_contact():
 	# open file in read mode
@@ -87,8 +164,6 @@ def if_four():
 
 
 
-
-
 def menu():
 	colorama.init()
 	print(Fore.MAGENTA + Style.DIM + "(01)" + Style.RESET_ALL + "Add new contact")
@@ -96,36 +171,45 @@ def menu():
 	print(Fore.MAGENTA + Style.DIM + "(03)" + Style.RESET_ALL + "Delete contact")
 	print(Fore.MAGENTA + Style.DIM + "(04)" + Style.RESET_ALL + "Contact List")
 	print(Fore.MAGENTA + Style.DIM + "(99)" + Style.RESET_ALL + "Exit")
-	
-menu()	
-while True:
-	answer = int(input("Enter your option:"))
-	if answer == 1:
-		clear()
-		logo()
-		main()			
-	elif answer == 2:
-		clear()
-		logo()
-		find_contact()
-	elif answer == 3:
+
+
+def main_main_process():
+	menu()
+	while True:
+		answer = int(input("Enter your option:"))
+		if answer == 1:
 			clear()
 			logo()
-			if_four()
-			delete_input = input("Input the contact from the ones above that you want to be deleted!\n Note. Copy and paste exactly the contact otherwise it wont work :D\n >")
-			delete_contact()
-			menu()	
-	elif answer == 4:			
-			if_four()
-			menu()	
-	else:
-		clear()
-		logo()
-		print("Input a number given in the options:")
-		menu()
-	if answer == 99:
-		clear()
-		logo()
-		print("Thanks for using this program.")
-		time.sleep(2)
-		quit()		
+			option_one()
+			menu()			
+		elif answer == 2:
+			clear()
+			logo()
+			find_contact()
+			menu()
+		elif answer == 3:
+				clear()
+				logo()
+				if_four()
+				global delete_input
+				delete_input = input("Input the contact from the ones above that you want to be deleted!\n Note. Copy and paste exactly the contact otherwise it wont work :D\n >")
+				delete_contact()
+				menu()	
+		elif answer == 4:			
+				if_four()
+				menu()	
+		else:
+			clear()
+			logo()
+			print("Input a number given in the options:")
+			menu()
+		if answer == 99:
+			clear()
+			logo()
+			print("Thanks for using this program.")
+			time.sleep(2)
+			quit()		
+
+logo()
+welcome_text()
+main_main_process()
