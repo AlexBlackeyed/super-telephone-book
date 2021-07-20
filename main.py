@@ -35,8 +35,6 @@ def welcome_text():
 
 
 def clear():
-  
-    # for windows
     if name == 'nt':
         _ = system('cls')
 
@@ -66,7 +64,7 @@ def option_one():
 			continue
 		else:
 			break
-	adress = input("What's your Adress? : ")
+	address = input("What's your Address? : ")
 	while True:
 		zip_code = input("What's your Zip Code? : ")
 		if zip_code.isalpha():
@@ -98,12 +96,12 @@ def option_one():
 		except ValueError:
 			print("Incorrect format. You should write it like this: dd/mm/yyyy")
 			continue
-	first_name.capitalize()
-	surname.capitalize()
-	location.capitalize()
-	adress.capitalize()
+	first_name = first_name.capitalize()
+	surname = surname.capitalize()
+	location = location.capitalize()
+	address = address.capitalize()
 	txt_name = first_name + "_" + surname
-	data = first_name, surname, telephone_number, location, adress, zip_code, email_address, birthday
+	data = "First Name: " + first_name, "Surname: " +surname, "Telephone Number: " + telephone_number, "Location: " + location, "Address: " +address, "Zip Code: " + zip_code, "Email Address" +email_address, "Birthday" + birthday
 	data = list(data)
 	basic_info = first_name + " " + surname
 	with open(''+txt_name+'.txt', "w+") as sh:
