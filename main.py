@@ -1,14 +1,11 @@
 from genericpath import exists
 from os import name, system, remove, path, getenv
 import time
-import colorama
-from colorama import Fore
-from colorama import Style
+from colorama import Fore, Style
 import shutil
 import requests
 from datetime import datetime
 import subprocess
-
 from requests import api
 
 def centered(s):
@@ -192,7 +189,7 @@ def edit_contact():
 	
 
 def menu():
-	colorama.init()
+	
 	print(Fore.MAGENTA + Style.DIM + "(01)" + Style.RESET_ALL + "Add new contact")
 	print(Fore.MAGENTA + Style.DIM + "(02)" + Style.RESET_ALL + "Search for contact")
 	print(Fore.MAGENTA + Style.DIM + "(03)" + Style.RESET_ALL + "Delete contact")
