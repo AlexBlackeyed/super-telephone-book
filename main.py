@@ -1,5 +1,5 @@
 from genericpath import exists
-from os import name, system, remove, path
+from os import name, system, remove, path, getenv
 import time
 import colorama
 from colorama import Fore
@@ -8,6 +8,8 @@ import shutil
 import requests
 from datetime import datetime
 import subprocess
+
+from requests import api
 
 def centered(s):
     print(s.center(shutil.get_terminal_size().columns))
@@ -54,17 +56,21 @@ def option_one():
 		else:
 			continue
 	while True:
-		telephone_number = input("What's your Telephone Number? : ")
-		if telephone_number.isalpha():
-			continue
-		else:
-			break
-	while True:
-		location = input("In which City do you live in? : ")
-		if  location.isdigit():
-			continue
-		else:
-			break
+		phone = input("What's your Telephone Number? (ex. +44........): ")
+		api_key = getenv(api)
+		response_phone = requests.get(f"https://phonevalidation.abstractapi.com/v1/?api_key={api_key}&phone={phone}")
+		phone_data = response_phone.json()
+		valid = response_phone.status_code
+		if valid > 200:
+			continue_input = input("Do you want to try again?[y/n]")
+			if continue_input == 'y':
+				continue
+			else:
+				break
+		location = phone_data['location']
+		break
+		
+		
 	address = input("What's your Address? : ")
 	while True:
 		zip_code = input("What's your Zip Code? : ")
@@ -77,7 +83,6 @@ def option_one():
 		response = requests.get(
 			"https://isitarealemail.com/api/email/validate",
 			params = {'email': email_address})
-
 		status = response.json()['status']
 		if status == "valid":
 			break
@@ -102,7 +107,7 @@ def option_one():
 	location = location.capitalize()
 	address = address.capitalize()
 	txt_name = first_name + "_" + surname
-	data = "First Name: " + first_name, "Surname: " +surname, "Telephone Number: " + telephone_number, "Location: " + location, "Address: " +address, "Zip Code: " + zip_code, "Email Address: " +email_address, "Birthday: " + birthday
+	data = "First Name: " + first_name, "Surname: " +surname, "Telephone Number: " + phone, "Location: " + location, "Address: " +address, "Zip Code: " + zip_code, "Email Address: " +email_address, "Birthday: " + birthday
 	data = list(data)
 	basic_info = first_name + "_" + surname
 	with open('super-telephone-book\\'+txt_name+'.txt', "w+") as sh:
@@ -114,7 +119,7 @@ def option_one():
 		main_catalog.write('\n')
 		main_catalog.write(basic_info)
 		main_catalog.write("\n")
-		main_catalog.write(telephone_number)
+		main_catalog.write(phone)
 		
 
 		
@@ -239,7 +244,10 @@ def notepad_run():
 	subprocess.run(["notepad", edit_input_path])
 
 
+def main():
+	logo()
+	welcome_text()
+	main_main_process()
 
-logo()
-welcome_text()
-main_main_process()
+
+main()
