@@ -1,12 +1,11 @@
-from genericpath import exists
-from os import name, system, remove, path, getenv
+from os import name, system, remove, path
 import time
 from colorama import Fore, Style
 import shutil
 import requests
 from datetime import datetime
 import subprocess
-from requests import api
+
 
 def centered(s):
     print(s.center(shutil.get_terminal_size().columns))
@@ -54,7 +53,7 @@ def option_one():
 			continue
 	while True:
 		phone = input("What's your Telephone Number? (ex. +44........): ")
-		api_key = getenv(api)
+		api_key = '2dcce2ea93f947389bdb82eef26bd2d4'
 		response_phone = requests.get(f"https://phonevalidation.abstractapi.com/v1/?api_key={api_key}&phone={phone}")
 		phone_data = response_phone.json()
 		valid = response_phone.status_code
@@ -115,8 +114,6 @@ def option_one():
 		main_catalog.write("\n")
 		main_catalog.write('\n')
 		main_catalog.write(basic_info)
-		main_catalog.write("\n")
-		main_catalog.write(phone)
 		
 
 		
@@ -161,7 +158,6 @@ def delete_contact():
 
 def if_four():
 	# opens txt file in read mode
-
 	fo = open("super-telephone-book\\names.txt", 'r')
 	#reads the txt
 	contact_list=fo.read()
@@ -189,7 +185,6 @@ def edit_contact():
 	
 
 def menu():
-	
 	print(Fore.MAGENTA + Style.DIM + "(01)" + Style.RESET_ALL + "Add new contact")
 	print(Fore.MAGENTA + Style.DIM + "(02)" + Style.RESET_ALL + "Search for contact")
 	print(Fore.MAGENTA + Style.DIM + "(03)" + Style.RESET_ALL + "Delete contact")
