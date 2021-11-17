@@ -3,10 +3,12 @@ from tkinter import ttk
 from os import remove, path
 from tkinter.messagebox import showinfo
 from ttkthemes import ThemedTk
+from ttkbootstrap import Style
 import subprocess 
-root = ThemedTk(themebg=True)
-root.set_theme('yaru')
+style = Style(theme='super-telephone-book', themes_file='stb_theme.json')
+root = style.master
 root.title("Super Telephone Book") 
+root.iconbitmap("super-telephone-book-logo.ico")
 screen_width= root.winfo_screenwidth()
 screen_height= root.winfo_screenheight()
 screen_width = str(screen_width)
@@ -150,18 +152,21 @@ def option_one():
     back_button.pack()
 
 def option_three():
-    clear()
-    fo = open("super-telephone-book\\names.txt", "r")
-    contact_list = fo.readlines()
-    for i, contact in enumerate(contact_list):
-        # remove \n
-        contact = contact.strip("\n")
-        # create buttons and pass index to callback/command
-        button = ttk.Button(root, text=contact, command=lambda index=i: option_three_command(index))
-        button.pack()
-        # update list of created buttons
-        Buttons.append(button)
-    back_button.pack()
+    try:
+        fo = open("super-telephone-book\\names.txt", "r")
+        contact_list = fo.readlines()
+        clear()
+        for i, contact in enumerate(contact_list):
+            # remove \n
+            contact = contact.strip("\n")
+            # create buttons and pass index to callback/command
+            button = ttk.Button(root, text=contact, command=lambda index=i: option_three_command(index))
+            button.pack()
+            # update list of created buttons
+            Buttons.append(button)
+            back_button.pack()
+    except FileNotFoundError:
+            showinfo("❌Error❌","Error!No Contacts Found. Please add new contacts from the home menu")
 def option_three_command(i):
     # Get text of clicked (=indexed) button
     delete_input = str(Buttons[i].cget("text"))
@@ -179,18 +184,22 @@ def option_three_command(i):
         showinfo('Error', 'This file does not exist')
     print(f"Delete name '{delete_input}'")
 def edit_contact():
-    clear()
-    fl = open("super-telephone-book\\names.txt", "r")
-    contact_list = fl.readlines()
-    for i, contact in enumerate(contact_list):
-        # remove \n
-        contact = contact.strip("\n")
-        # create buttons and pass index to callback/command
-        button = ttk.Button(root, text=contact, command=lambda index=i: edit_contact_command(index))
-        button.pack()
-        # update list of created buttons
-        Buttons.append(button)
-    back_button.pack()
+    try:
+        fl = open("super-telephone-book\\names.txt", "r")
+        contact_list = fl.readlines()
+        clear()
+        for i, contact in enumerate(contact_list):
+            # remove \n
+            contact = contact.strip("\n")
+            # create buttons and pass index to callback/command
+            button = ttk.Button(root, text=contact, command=lambda index=i: edit_contact_command(index))
+            button.pack()
+            # update list of created buttons
+            Buttons.append(button)
+            back_button.pack()
+    except FileNotFoundError:
+            showinfo("❌Error❌","Error!No Contacts Found. Please add new contacts from the home menu")
+    
 def edit_contact_command(i):
     global edit_path
     # Get text of clicked (=indexed) button
@@ -202,18 +211,22 @@ def edit_contact_command(i):
         showinfo("Please input a valid contact")
         
 def contact_list_on_screen():
-    with open("super-telephone-book\\names.txt", "r") as clos:
-        clear()
-        all_contacts = clos.readlines()
-        for item in all_contacts:
-            ttk.Label(root,text=item).pack()
-        back_button.pack()
+        try: 
+            with open("super-telephone-book\\names.txt", "r") as clos:
+                clear()
+                all_contacts = clos.readlines()
+                for item in all_contacts:
+                    ttk.Label(root,text=item).pack()
+                back_button.pack()
+        except FileNotFoundError:
+            showinfo("❌Error❌","Error!No Contacts Found. Please add new contacts from the home menu")
+    
 
 def menu():
     option_one_button = ttk.Button(
         root,
         text="Add A Contact",
-        command=option_one
+        command=option_one,
     )
     option_three_button = ttk.Button(
         root,
